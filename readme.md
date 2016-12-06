@@ -85,3 +85,33 @@ public void onCreate() {
 > 运行react-native run-android
 
 > 打开一个新的Chrome选项卡，在地址栏中输入[chrome://inspect](chrome://inspect)并回车。在页面中选择'Inspect device' （标有"Powered by Stetho"字样）。
+
+
+## 部分问题解决方案
+### 安卓
+`run-android的时候出现outDexFolder must be a folder`
+```
+关掉React Packager窗口，重新执行命令 $ react-native run-android
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

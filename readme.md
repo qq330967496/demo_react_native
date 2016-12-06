@@ -84,4 +84,4 @@ public void onCreate() {
 
 > 运行react-native run-android
 
-> 打开一个新的Chrome选项卡，在地址栏中输入chrome://inspect并回车。在页面中选择'Inspect device' （标有"Powered by Stetho"字样）。
+> 打开一个新的Chrome选项卡，在地址栏中输入[chrome://inspect](chrome://inspect)并回车。在页面中选择'Inspect device' （标有"Powered by Stetho"字样）。

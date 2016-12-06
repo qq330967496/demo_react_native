@@ -49,7 +49,7 @@ $ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias
 ```
 adb connect 127.0.0.1:26944
 ```
-## 在Android上使用Stetho来调试
+## 在Android上使用[Stetho](http://facebook.github.io/stetho/)来调试
 > 在android/app/build.gradle文件中添加：
 
 ```js
@@ -66,11 +66,8 @@ import okhttp3.OkHttpClient;
 import com.facebook.react.modules.network.OkHttpClientProvider;
 import com.facebook.stetho.okhttp3.StethoInterceptor;
 import java.util.concurrent.TimeUnit;
-```
 
-> 在android/app/src/main/java/com/{yourAppName}/MainApplication.java文件中添加：
 
-```java
 public void onCreate() {
       super.onCreate();
       Stetho.initializeWithDefaults(this);

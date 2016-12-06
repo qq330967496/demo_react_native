@@ -1,4 +1,4 @@
-# 安卓 react native版本
+# react native框架
 ### 使用
 > 初始化
 
@@ -49,3 +49,42 @@ $ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias
 ```
 adb connect 127.0.0.1:26944
 ```
+## 在Android上使用Stetho来调试
+> 在android/app/build.gradle文件中添加：
+
+```js
+compile 'com.facebook.stetho:stetho:1.3.1'
+compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
+```
+
+> 在android/app/src/main/java/com/{yourAppName}/MainApplication.java文件中添加：
+
+```java
+import com.facebook.react.modules.network.ReactCookieJarContainer;
+import com.facebook.stetho.Stetho;
+import okhttp3.OkHttpClient;
+import com.facebook.react.modules.network.OkHttpClientProvider;
+import com.facebook.stetho.okhttp3.StethoInterceptor;
+import java.util.concurrent.TimeUnit;
+```
+
+> 在android/app/src/main/java/com/{yourAppName}/MainApplication.java文件中添加：
+
+```java
+public void onCreate() {
+      super.onCreate();
+      Stetho.initializeWithDefaults(this);
+      OkHttpClient client = new OkHttpClient.Builder()
+      .connectTimeout(0, TimeUnit.MILLISECONDS)
+      .readTimeout(0, TimeUnit.MILLISECONDS)
+      .writeTimeout(0, TimeUnit.MILLISECONDS)
+      .cookieJar(new ReactCookieJarContainer())
+      .addNetworkInterceptor(new StethoInterceptor())
+      .build();
+      OkHttpClientProvider.replaceOkHttpClient(client);
+}
+```
+
+> 运行react-native run-android
+
+> 打开一个新的Chrome选项卡，在地址栏中输入chrome://inspect并回车。在页面中选择'Inspect device' （标有"Powered by Stetho"字样）。

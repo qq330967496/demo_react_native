@@ -1,5 +1,5 @@
 # react native框架
-> 初始化
+## 初始化（安卓、IOS通用）
 
 ```
 react-native init XXX（项目名称）

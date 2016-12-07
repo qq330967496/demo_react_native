@@ -98,6 +98,13 @@ public void onCreate() {
 3. 运行react-native run-android
 4. 打开一个新的Chrome选项卡，在地址栏中输入[chrome://inspect](chrome://inspect)并回车。在页面中选择'Inspect device' （标有"Powered by Stetho"字样）。
 
+#### 使用hot load实现代码同步到app上
+1. 打开摇晃菜单（在app页面摇晃手机）
+2. 选择Enable Hot Loading
+3. 修改代码测试是否可以同步更新
+
+### IOS
+> 待补充
 
 ## 常见问题解决方案
 ### 安卓

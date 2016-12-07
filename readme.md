@@ -31,7 +31,7 @@ $ adb devices
 $ adb connect 127.0.0.1:26944
 //后台日志
 $ react-native log-android
-//签名
+//生成签名密钥
 $ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias
 -keyalg RSA -keysize 2048 -validity 10000
 
@@ -102,6 +102,56 @@ public void onCreate() {
 1. 打开摇晃菜单（在app页面摇晃手机）
 2. 选择Enable Hot Loading
 3. 修改代码测试是否可以同步更新
+
+#### 打包apk
+1. 生成签名密钥，这条命令会要求你输入密钥库（keystore）和对应密钥的密码
+```
+$ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
+```
+2. 最后它会生成一个叫做`my-release-key.keystore`的密钥库文件，有效期为10000天。
+3. 把my-release-key.keystore文件放到你工程中的android/app文件夹
+4. 配置全局的gradle变量，编辑`C:\Users\{username}\.gradle\gradle.properties`，添加一下代码（注意把其中的****替换为相应密码）
+```
+MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
+MYAPP_RELEASE_KEY_ALIAS=my-key-alias
+MYAPP_RELEASE_STORE_PASSWORD=*****
+MYAPP_RELEASE_KEY_PASSWORD=*****
+```
+5. 添加签名到项目的gradle配置文件，编辑项目目录下的android/app/build.gradle
+```
+android {
+    ...
+    defaultConfig { ... }
+    signingConfigs {
+        release {
+            storeFile file(MYAPP_RELEASE_STORE_FILE)
+            storePassword MYAPP_RELEASE_STORE_PASSWORD
+            keyAlias MYAPP_RELEASE_KEY_ALIAS
+            keyPassword MYAPP_RELEASE_KEY_PASSWORD
+        }
+    }
+    buildTypes {
+        release {
+            ...
+            signingConfig signingConfigs.release
+        }
+    }
+}
+...
+```
+6. 生成发行APK包
+```
+$ cd android
+$ gradlew assembleRelease
+
+//linux或mac
+$ ./gradlew assembleRelease
+
+
+//安装发布包到设备
+$ gradlew installRelease
+```
+7. 生成的APK文件位于android/app/build/outputs/apk/app-release.apk，它已经可以用来发布了。
 
 ### IOS
 > 待补充

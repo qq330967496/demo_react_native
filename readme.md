@@ -106,6 +106,12 @@ public void onCreate() {
 1. 关掉React Packager窗口
 2. 重新执行命令 $ react-native run-android
 
+> 国产手机真机调试出现无法安装app的的情况
+
+1. 打开android/build.gradle文件
+2. 修改gradle:1.3.1版本为gradle:1.2.3（1.3.1版本的gradle对国产安卓机兼容性不好）
+3. 执行打包
+
 ### IOS
 > 待补充
 

@@ -10,12 +10,25 @@ import {
     Button,//按钮
     DrawerLayoutAndroid,//抽屉【安卓】
     Image,//图片
+    KeyboardAvoidingView,//防止键盘视图
+    ListView,//列表视图，可以用ScrollView的属性
+    //MapView,//地图视图（0.42版本被移除）
 } from 'react-native';
-class HelloWorld extends Component {
 
+import MapView from 'react-native-maps';
+
+class HelloWorld extends Component {
 
     //页面
     render() {
+        var lvds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        var lvArr = lvds.cloneWithRows('s1':['row1','row2','row3','row4','row5','row6'],'s2':['row7','row8']);
+
+
+        // var lvds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        // var lvArr = lvds.cloneWithRowsAndSections('s1':['row1','row2','row3','row4','row5','row6'],'s2':['row7','row8']);
+
+
         function pressButton() {
             Alert.alert('标题','内容',[
                 {text:'确定',onPress:()=>{console.log('确定')}}
@@ -24,13 +37,46 @@ class HelloWorld extends Component {
 
         var drawerNavigationView = (
             <View>
-              <Text>Drawer</Text>
+              <Text>Drawer</Text>  
             </View>
           );
 
         return (
             <ScrollView style={styles.container}>
-                <Text>组件</Text> 
+                <Text>组件</Text>
+
+
+
+                <Text>=============================================</Text>
+                <Text>MapView地图视图</Text> 
+                <MapView 
+                    style={styles.map}
+                    region={{latitude:0,longitude:0,latitudeDelta:0,longitudeDelta: 0}}
+                    zoomEnabled={true}
+                ></MapView>
+
+                <Text>=============================================</Text>
+                <Text>ListView列表视图</Text> 
+                <ListView
+                    dataSource={lvArr}
+                    initialListSize={3}
+                    pageSize={3} 
+                    onEndReached={()=>{console.log('onEndReached')}}
+                    onChangeVisibleRows={
+                        (visibleRows, changedRows) => {
+                            console.log('onChangeVisibleRows');
+                            visibleRows({ sectionID: { rowID: true  }});
+                            changedRows({ sectionID: { rowID: false }});
+                        }
+                    }
+                    renderRow={(rowData, sectionID, rowID, highlightRow) => <Text>{rowData}-{sectionID}-{rowID}-{highlightRow}</Text>}
+                    renderSectionHeader={(sectionData, sectionID) => <Text>小节标题-{sectionID}</Text> }
+                    renderSeparator={(sectionID, rowID, adjacentRowHighlighted) => <Text>分离器-{sectionID}-{rowID}-{adjacentRowHighlighted}</Text>}
+                />
+
+                <Text>=============================================</Text>
+                <Text>KeyboardAvoidingView防止键盘视图</Text>
+                <KeyboardAvoidingView></KeyboardAvoidingView>
 
                 <Text>=============================================</Text>
                 <Text>Image图片</Text>
@@ -86,6 +132,13 @@ const styles = StyleSheet.create({
     container:{
         
     },
+    map: {
+        height: 150,
+        width:300,
+        margin: 10,
+        borderWidth: 1,
+        borderColor: '#000000',
+    }
 });
 
 

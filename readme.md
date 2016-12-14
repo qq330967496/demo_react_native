@@ -2,7 +2,7 @@
 ## 初始化（安卓、IOS通用）
 
 ```
-react-native init {yourAppName}
+$ react-native init {yourAppName}
 ```
 
 ## 启动
@@ -62,7 +62,7 @@ $ react-native log-ios
 - 返回，摇动设备，点击 Reload JS
 
 
-#### 在Android上使用[Stetho](http://facebook.github.io/stetho/)来调试
+#### 在Android上使用[Stetho](http://facebook.github.io/stetho/)来调试（其实并没有什么卵用）
 - 在android/app/build.gradle文件中的dependency加入：
 ```js
 compile 'com.facebook.stetho:stetho:1.3.1'
@@ -105,22 +105,19 @@ public void onCreate() {
 
 #### 打包apk
 - 生成签名密钥，这条命令会要求你输入密钥库（keystore）和对应密钥的密码
-
 ```
 $ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keyalg RSA -keysize 2048 -validity 10000
 ```
 - 最后它会生成一个叫做`my-release-key.keystore`的密钥库文件，有效期为10000天。
 - 把my-release-key.keystore文件放到你工程中的android/app文件夹
-- 配置全局的gradle变量，编辑`C:\Users\{username}\.gradle\gradle.properties`，添加一下代码（注意把其中的****替换为相应密码）
-
+- 配置全局的gradle变量，编辑`C:\Users\{username}\.gradle\gradle.properties`，添加一下代码（注意把其中的xxxx替换为相应密码）
 ```
 MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
 MYAPP_RELEASE_KEY_ALIAS=my-key-alias
-MYAPP_RELEASE_STORE_PASSWORD=*****
-MYAPP_RELEASE_KEY_PASSWORD=*****
+MYAPP_RELEASE_STORE_PASSWORD=xxx
+MYAPP_RELEASE_KEY_PASSWORD=xxxx
 ```
 - 添加签名到项目的gradle配置文件，编辑项目目录下的android/app/build.gradle
-
 ```
 android {
     ...
@@ -142,7 +139,6 @@ android {
 }
 ```
 - 生成发行APK包
-
 ```
 $ cd android
 $ gradlew assembleRelease

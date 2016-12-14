@@ -110,14 +110,16 @@ $ keytool -genkey -v -keystore my-release-key.keystore -alias my-key-alias -keya
 ```
 - 最后它会生成一个叫做`my-release-key.keystore`的密钥库文件，有效期为10000天。
 - 把my-release-key.keystore文件放到你工程中的android/app文件夹
-- 配置全局的gradle变量，编辑`C:\Users\{username}\.gradle\gradle.properties`，添加一下代码（注意把其中的xxxx替换为相应密码）
+- 配置全局的gradle变量，编辑`C:\Users\{username}\.gradle\gradle.properties`，添加一下代码（注意把其中的xxx替换为相应密码）
+
 ```
 MYAPP_RELEASE_STORE_FILE=my-release-key.keystore
 MYAPP_RELEASE_KEY_ALIAS=my-key-alias
 MYAPP_RELEASE_STORE_PASSWORD=xxx
-MYAPP_RELEASE_KEY_PASSWORD=xxxx
+MYAPP_RELEASE_KEY_PASSWORD=xxx
 ```
 - 添加签名到项目的gradle配置文件，编辑项目目录下的android/app/build.gradle
+
 ```
 android {
     ...
@@ -139,6 +141,7 @@ android {
 }
 ```
 - 生成发行APK包
+
 ```
 $ cd android
 $ gradlew assembleRelease
